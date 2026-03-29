@@ -1,6 +1,13 @@
 import mongoose, { model } from "mongoose";
 
 const dishSchema = new mongoose.Schema({
+  code: {
+    type: String,
+    required: true,
+    unique: true,
+    minLength: [3, "Dish code must be at least 3 characters."],
+    maxLength: [20, "Dish code must be less than 20 characters."],
+  },
   name: {
     type: String,
     required: true,
@@ -18,7 +25,7 @@ const dishSchema = new mongoose.Schema({
     required: true,
     min: [1, "Price must be a positive number."],
   },
-  imageUrl: { type: String, required: true },
+  image: { type: String, required: true },
   category: {
     type: String,
     required: true,
