@@ -6,16 +6,18 @@ import {
   getDishByCode,
   updateDish,
 } from "../controller/dishController.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
+import { adminMiddleware } from "../middlewares/adminMiddleware.js";
 
 const router = express.Router();
 
 //* for admin only
-router.post("/add", addNewDish);
-router.delete("/delete/:code", deleteDish);
-router.put("/update/:code", updateDish);
+router.post("/add", authMiddleware, adminMiddleware, addNewDish);
+router.delete("/delete/:code", authMiddleware, adminMiddleware, deleteDish);
+router.put("/update/:code", authMiddleware, adminMiddleware, updateDish);
 
 // * for all users
-router.get("/getAll", getAllDishes);
-router.get("/getByCode/:code", getDishByCode);
+router.get("/getAll", authMiddleware, getAllDishes);
+router.get("/getByCode/:code", authMiddleware, getDishByCode);
 
 export default router;
